@@ -3,6 +3,8 @@ import { Toast } from "vant";
 export default function({ $axios, store, redirect }, inject) {
   // 请求拦截
   $axios.onRequest(config => {
+    //加载loading
+
     // 在请求头中要设置 token
     // 已登录,
     if (store.state.token) {
@@ -10,12 +12,13 @@ export default function({ $axios, store, redirect }, inject) {
       $axios.setHeader("Authorization", `Bearer ${store.state.token}`);
     }
     console.log("Making request to " + config.url);
-    console.log('config :>> ', config);
+    console.log("config :>> ", config);
     return config;
   });
 
   //响应拦截
   $axios.onResponse(res => {
+    //结束loading
     // console.log(res, "res");
     // 服务端 响应的状态码
     const { status, messgage } = res.data;

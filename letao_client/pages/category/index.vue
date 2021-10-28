@@ -4,6 +4,7 @@
       height="80vh"
       :items="oneCategoryList"
       :main-active-index.sync="active"
+      @click-nav="navHandle"
     >
       <!-- 二级分类 -->
       <template #content>
@@ -27,6 +28,18 @@ export default {
       active: 0,
       items: [{ text: "分组 1" }, { text: "分组 2" }]
     };
+  },
+  methods: {
+    //点击左侧一级分类触发改方法
+    //index 点击左侧索引
+    async navHandle(index) {
+      console.log(index);
+      //点击左侧项的id
+      let id = this.oneCategoryList[index]["id"];
+      //加载二级分类
+      const { twoCategoryList } = await this.$api.TwoCategory(id);
+      this.twoCategoryList = twoCategoryList;
+    }
   },
   async asyncData({ $api }) {
     let active = 0;
