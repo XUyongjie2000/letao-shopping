@@ -30,7 +30,12 @@ export default {
     // const { swiperList } = await $api.IndexBanners(); // 轮播图
     // const { gridlist } = await $api.IndexGridList(); // 宫格数据
     // const { sports } = await $api.IndexSport(); // 运动专区数据
-    const [{ swiperList }, { gridlist }, { sports }] = await Promise.all([
+    //swiperList = [] 默认值
+    const [
+      { swiperList = [] },
+      { gridlist = [] },
+      { sports = [] }
+    ] = await Promise.all([
       $api.IndexBanners(),
       $api.IndexGridList(),
       $api.IndexSport()

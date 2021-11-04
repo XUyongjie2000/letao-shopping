@@ -118,7 +118,6 @@ module.exports.createSign = (args) => {
       return (prev += `${next}=${args[next]}&`);
     }, "")
     .concat(`key=${key}`);
-  // console.log(stringA);
   return crypto.createHash("MD5").update(stringA).digest("hex").toUpperCase();
 };
 
@@ -130,12 +129,14 @@ module.exports.getRandomStr = () => {
 //微信下单   订单查询
 module.exports.orderHandle = (url, params) => {
   return new Promise(async (resolve, reject) => {
+    console.log(1);
     const data = await axios({
       url,
       method: "POST",
       data: params,
     });
-    // console.log(data);
+    console.log(2);
+    console.log(params);
     // resolve(data);
     xml.parseString(data.data, function (err, res) {
       const { return_code, return_msg, result_code } = res.xml;
@@ -144,9 +145,13 @@ module.exports.orderHandle = (url, params) => {
         result_code == "SUCCESS" &&
         return_msg == "OK"
       ) {
+        console.log(3);
+        console.log(res);
         resolve(res.xml);
       } else {
-        reject(res);
+        console.log(4);
+        console.log(res);
+        reject(err);
       }
     });
   });
@@ -159,7 +164,6 @@ module.exports.orderHandle = (url, params) => {
 //       method: "POST",
 //       data: params,
 //     });
-//     // console.log(data.data, 'data');
 //     xml.parseString(data.data, function (err, res) {
 //       const { return_code, result_code, return_msg } = res.xml;
 //       if (

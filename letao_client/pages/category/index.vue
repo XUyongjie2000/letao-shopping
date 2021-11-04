@@ -35,15 +35,20 @@ export default {
     async navHandle(index) {
       console.log(index);
       //点击左侧项的id
+      this.$router.replace(`/category?active=${index}`);
       let id = this.oneCategoryList[index]["id"];
       //加载二级分类
       const { twoCategoryList } = await this.$api.TwoCategory(id);
       this.twoCategoryList = twoCategoryList;
     }
   },
-  async asyncData({ $api }) {
-    let active = 0;
-    let { oneCategoryList } = await $api.OneCategory();
+  async asyncData({ $api, query }) {
+    let active = query.active || 0;
+    let { oneCategoryList = [] } = await $api.OneCategory();
+    //判断数据正常返回
+    if (!oneCategoryList.length) {
+      return;
+    }
     // 按照vant 组件对数据的要求，所以我们需要对返回的数据进行加工处理
     oneCategoryList = oneCategoryList.map(item => {
       return {

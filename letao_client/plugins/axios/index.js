@@ -8,8 +8,13 @@ export default function({ $axios, store, redirect }, inject) {
     // 在请求头中要设置 token
     // 已登录,
     if (store.state.token) {
+      console.log("tokennnnnnnnnnnnnnnnnnnnn");
       // 后端有开启JWT校验, 前端调用接口 需要设置token
       $axios.setHeader("Authorization", `Bearer ${store.state.token}`);
+    } else {
+      console.log("noneeeeeeeeeeee");
+      //退出登录 未登录
+      $axios.setHeader("Authorization", "");
     }
     console.log("Making request to " + config.url);
     console.log("config :>> ", config);
@@ -40,6 +45,8 @@ export default function({ $axios, store, redirect }, inject) {
     } else if (code == 401) {
       // 没有权限访问接口
       redirect("/my/login");
+      //返回成功的promise
+      return Promise.resolve(false);
     }
   });
   //封装请求方法

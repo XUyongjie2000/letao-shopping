@@ -20,7 +20,7 @@ export const verify = {
       return "请输入6-20位的密码";
     }
     //2.3确认密码是否一致
-    if (pwd !== repeatPwd) {
+    if (arguments.length > 1 && pwd !== repeatPwd) {
       return "两次密码输入不一致";
     }
   },

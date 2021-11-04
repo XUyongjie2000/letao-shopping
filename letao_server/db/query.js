@@ -3,7 +3,6 @@ var mysql = require("mysql");
 const { config } = require("./config");
 //配置信息
 const dbConfig = config[process.env.DB_ENV];
-console.log(process.env.DB_HOST, "DB_host");
 //连接数据库的配置信息
 var pool = mysql.createPool(dbConfig);
 //创建连接  sql:sql语句

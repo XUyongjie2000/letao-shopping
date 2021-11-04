@@ -4,7 +4,6 @@ const { oneCategory, twoCategory } = require("../model/category");
 module.exports.oneCategory = async (ctx) => {
   //   const result = await query("select * from category");
   const result = await oneCategory();
-  console.log(result);
 
   //返回数据
   ctx.body = {
@@ -19,7 +18,6 @@ module.exports.twoCategory = async (ctx) => {
   //数据查询交给model层
   //   await twoCategory(id);
   const result = await twoCategory(id);
-  console.log(result);
   //返回数据
   ctx.body = {
     status: 200,

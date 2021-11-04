@@ -16,7 +16,7 @@ const {
 const QRCode = require("qrcode");
 const { query } = require("../db/query");
 
-let nonce_str = getRandomStr();
+// let nonce_str = getRandomStr();
 // let out_trade_no = getTrade_no();
 //微信下单
 module.exports.order = async (ctx) => {
@@ -26,10 +26,10 @@ module.exports.order = async (ctx) => {
   const params = {
     appid, // 公众账号ID
     mch_id, //商户号
-    nonce_str: nonce_str, //32位以内的随机字符串
+    nonce_str: getRandomStr(), //32位以内的随机字符串
     // sign, //签名
     body, //商品描述
-    out_trade_no: out_trade_no, //商户订单号
+    out_trade_no: getTrade_no(), //商户订单号
     total_fee, //金额
     spbill_create_ip, //终端IP
     notify_url, //微信服务器回调地址
@@ -37,7 +37,6 @@ module.exports.order = async (ctx) => {
   };
   //生成签名  需要发送的参数生成
   const sign = createSign(params);
-  //   console.log(sign);
   //请求参数 新增sign属性
   //   params.sign = sign;
 
@@ -57,6 +56,7 @@ module.exports.order = async (ctx) => {
             </xml>
    `;
 
+   console.log(1);
   const data = await orderHandle(orderUrl, sendData);
 
   //下单成功
@@ -66,12 +66,15 @@ module.exports.order = async (ctx) => {
     result_code == "SUCCESS" &&
     return_msg == "OK"
   ) {
-    //把订单数据写到payorder
+   console.log(2);
+   //把订单数据写到payorder
     await query(
       `insert into payorder (appid,mch_id,nonce_str,body,out_trade_no,total_fee,spbill_create_ip,trade_type,trade_state)values ("${appid}","${mch_id}","${params.nonce_str}","${body}","${params.out_trade_no}","${total_fee}","${spbill_create_ip}","${trade_type}","NOTPAY")`
     );
-    data.payUrl = await QRCode.toDataURL(code_url);
-    //把随机字符串 和商户订单号传给前端
+   console.log(3);
+   data.payUrl = await QRCode.toDataURL(code_url);
+   console.log(4);
+   //把随机字符串 和商户订单号传给前端
     data.nonce_str = params.nonce_str;
     data.out_trade_no = params.out_trade_no;
   }
@@ -84,10 +87,8 @@ module.exports.order = async (ctx) => {
 //微信下单通知
 module.exports.notify = async (ctx) => {
   //打印微信服务器回调你的接口时的请求报文
-  // console.log(ctx.request.body.xml);
   // out_trade_no 商户订单号
   const { out_trade_no } = ctx.request.body.xml;
-  console.log(ctx.request.body.xml);
   //根据商户订单号更新订单状态
   await query(
     `update payorder set trade_state = "SUCCESS" where out_trade_no = "${out_trade_no}" `
@@ -102,7 +103,7 @@ module.exports.notify = async (ctx) => {
     mch_id,
     nonce_str,
     openid,
-    out_trade_no,
+    // out_trade_no,
     sign,
     time_end,
     total_fee,
@@ -129,8 +130,7 @@ module.exports.notify = async (ctx) => {
 
 // 微信订单查询
 module.exports.queryOrder = async (ctx) => {
-  // const { nonce_str, out_trade_no } = ctx.request.body;
-  console.log(ctx.request);
+  const { nonce_str, out_trade_no } = ctx.request.body;
   let params = {
     appid,
     mch_id,
@@ -150,8 +150,6 @@ module.exports.queryOrder = async (ctx) => {
        </xml>
   `;
   const data = await orderHandle(orderquery, sendData);
-  console.log(mch_id);
-  console.log(nonce_str);
   ctx.body = {
     status: 200,
     data,

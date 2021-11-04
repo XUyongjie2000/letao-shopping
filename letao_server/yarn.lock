@@ -1557,6 +1557,11 @@ koa-convert@^2.0.0:
     co "^4.6.0"
     koa-compose "^4.1.0"
 
+koa-cors@^0.0.16:
+  version "0.0.16"
+  resolved "https://registry.npmmirror.com/koa-cors/download/koa-cors-0.0.16.tgz#98107993a7909e34c042986c5ec6156d77f3432e"
+  integrity sha1-mBB5k6eQnjTAQphsXsYVbXfzQy4=
+
 koa-is-json@1:
   version "1.0.0"
   resolved "https://registry.nlark.com/koa-is-json/download/koa-is-json-1.0.0.tgz#273c07edcdcb8df6a2c1ab7d59ee76491451ec14"
@@ -1645,7 +1650,7 @@ koa-views@^6.2.0:
 
 koa-xml-body@^2.2.0:
   version "2.2.0"
-  resolved "https://registry.npm.taobao.org/koa-xml-body/download/koa-xml-body-2.2.0.tgz#593217d09e2fedcc1b34ce71c25df6571e833970"
+  resolved "https://registry.npmmirror.com/koa-xml-body/download/koa-xml-body-2.2.0.tgz#593217d09e2fedcc1b34ce71c25df6571e833970"
   integrity sha1-WTIX0J4v7cwbNM5xwl32Vx6DOXA=
   dependencies:
     raw-body "^2.4.1"

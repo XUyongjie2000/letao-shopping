@@ -6,5 +6,5 @@ module.exports.oneCategory = async () => {
 
 //二级分类数据层
 module.exports.twoCategory = async (id) => {
-  return await query("select * from brand where id=?", [id]);
+  return await query("select * from brand where categoryId=?", [id]);
 };

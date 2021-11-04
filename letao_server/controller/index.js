@@ -39,27 +39,27 @@ module.exports.banners = async (ctx) => {
     swiperList: [
       {
         id: 1,
-        img_src: "images/banners1.png",
+        img_src: "images/banner1.png",
       },
       {
         id: 2,
-        img_src: "images/banners2.png",
+        img_src: "images/banner2.png",
       },
       {
         id: 3,
-        img_src: "images/banners3.png",
+        img_src: "images/banner3.png",
       },
       {
         id: 4,
-        img_src: "images/banners4.png",
+        img_src: "images/banner4.png",
       },
       {
         id: 5,
-        img_src: "images/banners5.png",
+        img_src: "images/banner5.png",
       },
       {
         id: 6,
-        img_src: "images/banners6.png",
+        img_src: "images/banner6.png",
       },
     ],
   };
